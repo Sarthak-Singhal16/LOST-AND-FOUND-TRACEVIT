@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Found an Item - TRACEVIT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background: linear-gradient(135deg, #ffffff, #f0f8ff);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #0077b6;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #0077b6;
+      box-shadow: 0 4px 10px rgba(0, 119, 182, 0.2);
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    button {
+      padding: 12px 15px;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #005f8a, #0077b6);
+      transform: scale(1.02);
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: -10px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+    }
+
+    .footer img {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="logo.png" alt="Logo" onclick="window.location.href='dashboard.html'" />
+      <h1>Found an Item</h1>
+      <img src="profile.png" alt="Profile" />
+    </div>
+    <form id="foundForm">
+      <label for="itemName">Item Name</label>
+      <input type="text" id="itemName" name="itemName" placeholder="Enter the name of the item" />
+      <div class="error" id="itemNameError"></div>
+
+      <label for="foundDate">Date Found</label>
+      <input type="date" id="foundDate" name="foundDate" />
+      <div class="error" id="foundDateError"></div>
+
+      <label for="foundLocation">Location Found</label>
+      <input type="text" id="foundLocation" name="foundLocation"
+        placeholder="Enter the location where you found the item" />
+      <div class="error" id="foundLocationError"></div>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Provide a brief description of the item"></textarea>
+      <div class="error" id="descriptionError"></div>
+
+      <label for="contactInfo">Your Contact Information</label>
+      <input type="text" id="contactInfo" name="contactInfo" placeholder="Enter your email or phone number" />
+      <div class="error" id="contactInfoError"></div>
+
+      <label for="itemImage">Upload Item Image</label>
+      <input type="file" id="itemImage" name="itemImage" accept="image/*" />
+      <div class="error" id="itemImageError"></div>
+
+      <button type="submit">Submit</button>
+    </form>
+    <div class="success-message" id="successMessage"></div>
+    <div class="footer">
+      <img src="home-icon.png" alt="Home" onclick="window.location.href='dashboard.html'" />
+      <img src="notification-icon.png" alt="Notifications" />
+    </div>
+  </div>
+  <script>
+    document
+      .getElementById("foundForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        document
+          .querySelectorAll(".error")
+          .forEach((error) => (error.textContent = ""));
+        document.getElementById("successMessage").textContent = "";
+        const itemName = document.getElementById("itemName").value.trim();
+        const foundDate = document.getElementById("foundDate").value.trim();
+        const foundLocation = document.getElementById("foundLocation").value.trim();
+        const description = document.getElementById("description").value.trim();
+        const contactInfo = document.getElementById("contactInfo").value.trim();
+        const itemImage = document.getElementById("itemImage").files[0];
+        let isValid = true;
+        const nameRegex = /^[a-zA-Z0-9\s]+$/;
+        const contactRegex = /^[a-zA-Z0-9@.\s]+$/;
+        if (!itemName || !nameRegex.test(itemName)) {
+          document.getElementById("itemNameError").textContent =
+            "Valid item name is required.";
+          isValid = false;
+        }
+        if (!foundDate) {
+          document.getElementById("foundDateError").textContent =
+            "Date is required.";
+          isValid = false;
+        }
+        if (!foundLocation) {
+          document.getElementById("foundLocationError").textContent =
+            "Location is required.";
+          isValid = false;
+        }
+        if (!description) {
+          document.getElementById("descriptionError").textContent =
+            "Description is required.";
+          isValid = false;
+        }
+        if (!contactInfo || !contactRegex.test(contactInfo)) {
+          document.getElementById("contactInfoError").textContent =
+            "Valid contact information is required.";
+          isValid = false;
+        }
+        if (!itemImage) {
+          document.getElementById("itemImageError").textContent =
+            "Item image is required.";
+          isValid = false;
+        }
+        if (isValid) {
+          document.getElementById("successMessage").textContent =
+            "Item successfully submitted!";
+          document.getElementById("foundForm").reset();
+        }
+      });
+  </script>
+</body>
+
+</html>
