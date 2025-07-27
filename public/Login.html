@@ -155,18 +155,18 @@
         contentType: "application/json",
         data: JSON.stringify({ email: email, password: password }),
         success: function (response) {
-          // Store user details
+
           if (response.name) {
             localStorage.setItem("userName", response.name);
           }
           if (response.role) {
             localStorage.setItem("userRole", response.role);
           }
-          // If user role is master, greet admin
+
           if (response.role && response.role === "master") {
             alert("Hello admin! " + response.message);
           }
-          // Redirect based on response.redirect (it should be set by the controller)
+        
           if (response.redirect) {
             window.location.href = response.redirect;
           } else {

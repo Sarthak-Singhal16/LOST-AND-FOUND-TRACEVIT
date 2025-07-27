@@ -1,8 +1,6 @@
-// controllers/authController.js
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-// Traditional Signup
 exports.signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -22,7 +20,6 @@ exports.signup = async (req, res) => {
   }
 };
 
-// Traditional Login
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -32,9 +29,10 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ error: 'Incorrect password.' });
     
-    // Check the user role and prepare the appropriate response.
+    req.session.userId = user._id;
+    req.session.loginTime = Date.now();
+    
     if (user.role === 'master') {
-      // For master users: send an admin greeting and set redirect to master.html.
       res.json({
         message: 'Hello Admin',
         userId: user._id,
@@ -43,7 +41,6 @@ exports.login = async (req, res) => {
         redirect: 'master.html'
       });
     } else {
-      // For regular users: send normal login success response with dashboard redirect.
       res.json({
         message: 'Login successful',
         userId: user._id,
@@ -56,4 +53,3 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-

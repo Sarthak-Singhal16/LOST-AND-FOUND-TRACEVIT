@@ -1,4 +1,3 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +46,7 @@
       font-weight: 700;
       color: #ff6b6b;
       margin: 0;
-      line-height: 40px; /* roughly match the image height */
+      line-height: 40px; 
     }
     form {
       display: flex;
@@ -159,12 +158,9 @@
   <script>
     $("#foundForm").on("submit", function (e) {
       e.preventDefault();
-
-      // Clear previous error messages
       $(".error").text("");
       $("#successMessage").text("");
 
-      // Gather form data using updated IDs
       const itemName = $("#itemName").val().trim();
       const foundDate = $("#foundDate").val().trim();
       const foundLocation = $("#foundLocation").val().trim();
@@ -202,32 +198,28 @@
       }
 
       if (isValid) {
-        // Create a FormData object and append form fields and file
         const formData = new FormData();
         formData.append("name", itemName);
-        formData.append("category", ""); // Set a default or user-selected category if needed
+        formData.append("category", ""); 
         formData.append("description", description);
         formData.append("date", foundDate);
-        formData.append("time", "");  // Optionally add a time
+        formData.append("time", "");  
         formData.append("place", foundLocation);
         formData.append("status", "available");
-        // Append the image file using the key "image" (this must match the Multer configuration)
         formData.append("image", itemImage);
 
-        // Send the AJAX POST request using the FormData
+        
         $.ajax({
           url: "/api/items/register",
           type: "POST",
           data: formData,
-          processData: false, // Do not process data as a query string
-          contentType: false, // Let the browser set the content type including the boundary
+          processData: false, 
+          contentType: false, 
           headers: {
-            // Include the token if your API requires Authorization, otherwise remove this
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           success: function (response) {
             alert(response.message);
-            // Optionally, redirect to the dashboard or clear the form
             window.location.href = "dashboard.html";
           },
           error: function (xhr, status, error) {

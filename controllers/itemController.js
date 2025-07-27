@@ -1,4 +1,4 @@
-// controllers/itemController.js
+
 const Item = require('../models/Item');
 
 exports.registerItem = async (req, res) => {
@@ -12,7 +12,6 @@ exports.registerItem = async (req, res) => {
     }
     let imagePath = "";
     if (req.file) {
-      // Save only the file name; the file is stored in public/images/uploads/
       imagePath = req.file.filename;
     }
     const newItem = new Item({
@@ -23,8 +22,6 @@ exports.registerItem = async (req, res) => {
       place,
       status,
       image: imagePath,
-      // Assuming you are using session-based authentication, the authenticated user's ID might be stored in req.user._id.
-      // Adjust accordingly if you use a different mechanism.
       postedBy: req.user ? req.user._id : null
     });
     await newItem.save();

@@ -32,7 +32,7 @@
       flex-direction: column;
     }
     
-    /* Navbar styling */
+  
     .navbar {
       background-color: var(--primary);
       padding: 18px 50px;
@@ -101,7 +101,7 @@
       transform: translateY(-2px);
     }
     
-    /* Page container styling */
+
     .container {
       flex: 1;
       max-width: 1200px;
@@ -151,7 +151,7 @@
       color: #aaa;
     }
     
-    /* Grid for cards and no-items state */
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -161,7 +161,7 @@
       width: 100%;
     }
     
-    /* Card styling */
+
     .card-item {
       background: var(--card-bg);
       padding: 20px;
@@ -203,7 +203,7 @@
       line-height: 1.4;
     }
     
-    /* Status styling */
+
     .card-item .status {
       font-weight: 500;
       margin-bottom: 8px;
@@ -223,9 +223,9 @@
       color: #dc3545;
     }
     
-    /* No items / error state styling */
+  
     .no-items {
-      grid-column: 1 / -1; /* Force the box to span all grid columns */
+      grid-column: 1 / -1; 
       display: flex;
       align-items: center;
       gap: 20px;
@@ -270,7 +270,7 @@
       color: var(--text);
     }
     
-    /* Description styling */
+
     .item-description {
       background-color: rgba(244, 246, 248, 0.9);
       border-radius: 8px;
@@ -323,7 +323,7 @@
       animation: pulse 1.5s infinite ease-in-out;
     }
     
-    /* Responsive adjustments */
+  
     @media (max-width: 768px) {
       .search-bar {
         width: 90%;
@@ -352,7 +352,7 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
+
   <nav class="navbar">
     <img src="logo.png" alt="Logo" class="logo" onclick="window.location.href='dashboard.html'" />
     <div class="user-info">
@@ -361,7 +361,7 @@
     </div>
   </nav>
   
-  <!-- Page Content -->
+ 
   <div class="container">
     <div class="search-container">
       <div class="search-bar">
@@ -370,17 +370,17 @@
       </div>
     </div>
     <div class="card-grid" id="card-grid">
-      <!-- Cards and the no-items box will be injected here -->
+   
       <div class="loader" id="loader" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         <i class="fas fa-circle-notch fa-spin fa-3x" style="color: var(--primary);"></i>
       </div>
     </div>
   </div>
   
-  <!-- jQuery -->
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    // Function to fetch items from the backend and populate the card grid
+   
     function fetchItems(query = "") {
       $("#card-grid").empty();
       $("#loader").show();
@@ -448,7 +448,7 @@
       });
     }
     
-    // Toggle the item description panel
+
     function toggleDescription() {
       const targetId = $(this).data("target");
       const descriptionElement = $(`#${targetId}`);
@@ -471,16 +471,14 @@
       }, 300);
     });
     
-    // Initial fetch of items
+  
     fetchItems();
     
-    // Load username from localStorage on DOMContentLoaded
     document.addEventListener("DOMContentLoaded", function () {
       const username = localStorage.getItem("userName") || "User Name";
       document.getElementById("username").textContent = username;
     });
     
-    // Logout handler
     document.getElementById("logoutBtn").addEventListener("click", function () {
       localStorage.removeItem("userName");
       localStorage.removeItem("token");

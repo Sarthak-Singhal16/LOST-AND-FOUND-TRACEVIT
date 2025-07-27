@@ -176,13 +176,9 @@
     </div>
   </div>
   <script>
-    document
-      .getElementById("foundForm")
-      .addEventListener("submit", function (e) {
+    document.getElementById("foundForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        document
-          .querySelectorAll(".error")
-          .forEach((error) => (error.textContent = ""));
+        document.querySelectorAll(".error").forEach((error) => (error.textContent = ""));
         document.getElementById("successMessage").textContent = "";
         const itemName = document.getElementById("itemName").value.trim();
         const foundDate = document.getElementById("foundDate").value.trim();

@@ -236,7 +236,7 @@
       transform: translateY(0);
     }
 
-    /* Footer styling */
+ 
     .footer {
       background-color: var(--primary-light);
       text-align: center;
@@ -245,7 +245,7 @@
       color: var(--primary-dark);
     }
 
-    /* Responsive adjustments */
+ 
     @media (max-width: 768px) {
       .navbar {
         padding: 15px 20px;
@@ -334,9 +334,7 @@
       const username = localStorage.getItem("userName") || "User";
       document.getElementById("username").textContent = username;
     });
-    document
-      .getElementById("logoutBtn")
-      .addEventListener("click", function () {
+    document.getElementById("logoutBtn").addEventListener("click", function () {
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
         window.location.href = "Login.html";
